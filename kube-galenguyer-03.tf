@@ -13,7 +13,7 @@ resource "azurerm_network_interface" "kube-galenguyer-03-nic" {
 
     ip_configuration {
         name                          = "kube-galenguyer-03-nic-config"
-        subnet_id                     = azurerm_subnet.kube-galenguyer-subnet.id
+        subnet_id                     = azurerm_subnet.kube-subnet.id
         private_ip_address_allocation = "Dynamic"
         public_ip_address_id          = azurerm_public_ip.kube-galenguyer-03-ip.id
     }
@@ -21,7 +21,7 @@ resource "azurerm_network_interface" "kube-galenguyer-03-nic" {
 
 resource "azurerm_network_interface_security_group_association" "kube-galenguyer-03-nic-nsg-association" {
     network_interface_id      = azurerm_network_interface.kube-galenguyer-03-nic.id
-    network_security_group_id = azurerm_network_security_group.kube-galenguyer-nsg.id
+    network_security_group_id = azurerm_network_security_group.kube-nsg.id
 }
 
 resource "azurerm_linux_virtual_machine" "kube-galenguyer-03" {

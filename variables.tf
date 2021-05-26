@@ -6,3 +6,7 @@ variable username {
   type = string
   default = "user"
 }
+variable uniqueid {
+  type = string
+  default = "abcd"
+}
