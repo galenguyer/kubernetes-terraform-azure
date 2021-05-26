@@ -19,21 +19,21 @@ resource "azurerm_resource_group" "kube" {
 }
 
 resource "azurerm_virtual_network" "kube-vnet" {
- name                = "kube-${var.uniqueid}-vnet"
+ name                = "kube-vnet"
  address_space       = ["10.0.0.0/16"]
  location            = "eastus"
  resource_group_name = azurerm_resource_group.kube.name
 }
 
 resource "azurerm_subnet" "kube-subnet" {
- name                 = "kube-${var.uniqueid}-subnet"
+ name                 = "kube-subnet"
  resource_group_name  = azurerm_resource_group.kube.name
  virtual_network_name = azurerm_virtual_network.kube-vnet.name
  address_prefixes       = ["10.0.8.0/24"]
 }
 
 resource "azurerm_network_security_group" "kube-nsg" {
-    name                = "kube-${var.uniqueid}-nsg"
+    name                = "kube-nsg"
     location            = "eastus"
     resource_group_name = azurerm_resource_group.kube.name
 
