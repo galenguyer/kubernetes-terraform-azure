@@ -29,7 +29,7 @@ resource "azurerm_linux_virtual_machine" "k8s-02" {
     location              = var.region
     resource_group_name   = azurerm_resource_group.k8s.name
     network_interface_ids = [azurerm_network_interface.k8s-02-nic.id]
-    size                  = "Standard_B2s"
+    size                  = var.vm_size
 
     os_disk {
         name                 = "k8s-02-osdisk"

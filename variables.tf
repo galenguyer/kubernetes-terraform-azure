@@ -6,6 +6,10 @@ variable region {
   type = string
   default = "eastus"
 }
+variable vm_size {
+  type = string
+  default = "Standard_B2s"
+}
 variable username {
   type = string
   default = "user"
