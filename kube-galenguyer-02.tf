@@ -3,7 +3,7 @@ resource "azurerm_public_ip" "kube-02-ip" {
  location                     = "East US"
  resource_group_name          = azurerm_resource_group.kube.name
  allocation_method            = "Static"
- domain_name_label            = "kube-02"
+ domain_name_label            = "kube-${var.uniqueid}-02"
 }
 
 resource "azurerm_network_interface" "kube-02-nic" {
