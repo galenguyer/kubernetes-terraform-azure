@@ -13,29 +13,29 @@ provider "azurerm" {
   features {}
 }
 
-resource "azurerm_resource_group" "kube" {
-  name     = "kube"
+resource "azurerm_resource_group" "k8s" {
+  name     = "k8s"
   location = var.region
 }
 
-resource "azurerm_virtual_network" "kube-vnet" {
- name                = "kube-vnet"
+resource "azurerm_virtual_network" "k8s-vnet" {
+ name                = "k8s-vnet"
  address_space       = ["10.0.0.0/16"]
  location            = var.region
- resource_group_name = azurerm_resource_group.kube.name
+ resource_group_name = azurerm_resource_group.k8s.name
 }
 
-resource "azurerm_subnet" "kube-subnet" {
- name                 = "kube-subnet"
- resource_group_name  = azurerm_resource_group.kube.name
- virtual_network_name = azurerm_virtual_network.kube-vnet.name
+resource "azurerm_subnet" "k8s-subnet" {
+ name                 = "k8s-subnet"
+ resource_group_name  = azurerm_resource_group.k8s.name
+ virtual_network_name = azurerm_virtual_network.k8s-vnet.name
  address_prefixes       = ["10.0.8.0/24"]
 }
 
-resource "azurerm_network_security_group" "kube-nsg" {
-    name                = "kube-nsg"
+resource "azurerm_network_security_group" "k8s-nsg" {
+    name                = "k8s-nsg"
     location            = var.region
-    resource_group_name = azurerm_resource_group.kube.name
+    resource_group_name = azurerm_resource_group.k8s.name
 
     # normal stuff
     security_rule {
@@ -95,7 +95,7 @@ resource "azurerm_network_security_group" "kube-nsg" {
         destination_address_prefix = "*"
     }
     security_rule {
-        name                       = "kubelet API controller"
+        name                       = "k8slet API controller"
         priority                   = 1102
         direction                  = "Inbound"
         access                     = "Allow"
@@ -106,7 +106,7 @@ resource "azurerm_network_security_group" "kube-nsg" {
         destination_address_prefix = "*"
     }
     security_rule {
-        name                       = "kube-scheduler"
+        name                       = "k8s-scheduler"
         priority                   = 1103
         direction                  = "Inbound"
         access                     = "Allow"
@@ -117,7 +117,7 @@ resource "azurerm_network_security_group" "kube-nsg" {
         destination_address_prefix = "*"
     }
     security_rule {
-        name                       = "kube-controller-manager"
+        name                       = "k8s-controller-manager"
         priority                   = 1104
         direction                  = "Inbound"
         access                     = "Allow"
@@ -129,7 +129,7 @@ resource "azurerm_network_security_group" "kube-nsg" {
     }
     # worker node stuff
     security_rule {
-        name                       = "kubelet API worker"
+        name                       = "k8slet API worker"
         priority                   = 1110
         direction                  = "Inbound"
         access                     = "Allow"
