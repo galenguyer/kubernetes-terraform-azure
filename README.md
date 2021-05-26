@@ -7,7 +7,7 @@ To override the values in the variables.tf file, create a file following the [Te
 
 ## To-Do's
 
-- [ ] Remove galenguyer from everything
+- [X] Remove galenguyer from everything
 
 - [X] Remove the chef username from VM creation
 
