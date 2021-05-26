@@ -44,11 +44,11 @@ resource "azurerm_linux_virtual_machine" "kube-galenguyer-01" {
         version   = "latest"
     }
 
-    admin_username = "chef"
+    admin_username = var.username
     disable_password_authentication = true
 
     admin_ssh_key {
-        username       = "chef"
+        username       = var.username
         public_key = file("~/.ssh/id_rsa.pub")
     }
 }
