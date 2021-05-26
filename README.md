@@ -9,4 +9,4 @@ terraform description for a cluster for a basic Kubernetes setup
 
 - [ ] Remove the chef username from VM creation
 
-- [ ] Remove subscription ID
+- [X] Remove subscription ID
