@@ -15,13 +15,13 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "kube" {
   name     = "kube"
-  location = "eastus"
+  location = var.region
 }
 
 resource "azurerm_virtual_network" "kube-vnet" {
  name                = "kube-vnet"
  address_space       = ["10.0.0.0/16"]
- location            = "eastus"
+ location            = var.region
  resource_group_name = azurerm_resource_group.kube.name
 }
 
@@ -34,7 +34,7 @@ resource "azurerm_subnet" "kube-subnet" {
 
 resource "azurerm_network_security_group" "kube-nsg" {
     name                = "kube-nsg"
-    location            = "eastus"
+    location            = var.region
     resource_group_name = azurerm_resource_group.kube.name
 
     # normal stuff

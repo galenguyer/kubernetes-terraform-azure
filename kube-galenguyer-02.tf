@@ -8,7 +8,7 @@ resource "azurerm_public_ip" "kube-02-ip" {
 
 resource "azurerm_network_interface" "kube-02-nic" {
     name                        = "kube-02-nic"
-    location                    = "eastus"
+    location                    = var.region
     resource_group_name         = azurerm_resource_group.kube.name
 
     ip_configuration {
@@ -26,7 +26,7 @@ resource "azurerm_network_interface_security_group_association" "kube-02-nic-nsg
 
 resource "azurerm_linux_virtual_machine" "kube-02" {
     name                  = "kube-02"
-    location              = "eastus"
+    location              = var.region
     resource_group_name   = azurerm_resource_group.kube.name
     network_interface_ids = [azurerm_network_interface.kube-02-nic.id]
     size                  = "Standard_B2s"
