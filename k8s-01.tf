@@ -34,7 +34,7 @@ resource "azurerm_linux_virtual_machine" "k8s-01" {
     os_disk {
         name                 = "k8s-01-osdisk"
         caching              = "ReadWrite"
-        storage_account_type = "Standard_LRS"
+        storage_account_type = "Premium_LRS"
     }
 
     source_image_reference {
