@@ -158,37 +158,37 @@ resource "azurerm_subnet_network_security_group_association" "nic-subnet-associa
 
 resource "azurerm_public_ip" "ip" {
   count               = var.worker_count
-  name                = "${azurerm_resource_group.rg.name}-${count.index}-ip"
+  name                = "${azurerm_resource_group.rg.name}-${format("%02d", count.index+1)}-ip"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
-  domain_name_label   = "${azurerm_resource_group.rg.name}-${var.unique_id}-${count.index}"
+  domain_name_label   = "${azurerm_resource_group.rg.name}-${var.unique_id}-${format("%02d", count.index+1)}"
 }
 
 resource "azurerm_network_interface" "nic" {
   count               = var.worker_count
-  name                = "${azurerm_resource_group.rg.name}-${count.index}-nic"
+  name                = "${azurerm_resource_group.rg.name}-${format("%02d", count.index+1)}-nic"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name                          = "${azurerm_resource_group.rg.name}-${count.index}-nic-config"
+    name                          = "${azurerm_resource_group.rg.name}-${format("%02d", count.index+1)}-nic-config"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = element(azurerm_public_ip.ip.*.id, count.index)
+    public_ip_address_id          = element(azurerm_public_ip.ip.*.id, format("%02d", count.index+1))
   }
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
   count                 = var.worker_count
-  name                  = "${azurerm_resource_group.rg.name}-vm-${count.index}"
+  name                  = "${azurerm_resource_group.rg.name}-vm-${format("%02d", count.index+1)}"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
-  network_interface_ids = [element(azurerm_network_interface.nic.*.id, count.index)]
+  network_interface_ids = [element(azurerm_network_interface.nic.*.id, format("%02d", count.index+1))]
   size                  = var.vm_size
 
   os_disk {
-    name                 = "${azurerm_resource_group.rg.name}-vm-${count.index}-osdisk"
+    name                 = "${azurerm_resource_group.rg.name}-vm-${format("%02d", count.index+1)}-osdisk"
     caching              = "ReadWrite"
     storage_account_type = var.vm_disk_type
   }
