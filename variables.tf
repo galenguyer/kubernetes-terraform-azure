@@ -15,7 +15,7 @@ variable rg_region {
 
 variable vm_size {
   type    = string
-  default = "Standard_B1ls"
+  default = "Standard_B2s"
 }
 
 // can be one of [Premium_LRS, Standard_LRS, StandardSSD_LRS]
