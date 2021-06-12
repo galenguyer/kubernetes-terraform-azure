@@ -175,7 +175,7 @@ resource "azurerm_network_interface" "nic" {
     name                          = "${azurerm_resource_group.rg.name}-nic-config-${format("%02d", count.index+1)}"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = element(azurerm_public_ip.ip.*.id, format("%02d", count.index+1))
+    public_ip_address_id          = element(azurerm_public_ip.ip.*.id, count.index)
   }
 }
 
@@ -184,7 +184,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   name                  = "${azurerm_resource_group.rg.name}-vm-${format("%02d", count.index+1)}"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
-  network_interface_ids = [element(azurerm_network_interface.nic.*.id, format("%02d", count.index+1))]
+  network_interface_ids = [element(azurerm_network_interface.nic.*.id, count.index)]
   size                  = var.vm_size
 
   os_disk {
