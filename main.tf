@@ -158,7 +158,7 @@ resource "azurerm_subnet_network_security_group_association" "nic-subnet-associa
 
 resource "azurerm_public_ip" "ip" {
   count               = var.worker_count
-  name                = "${azurerm_resource_group.rg.name}-${format("%02d", count.index+1)}-ip"
+  name                = "${azurerm_resource_group.rg.name}-ip-${format("%02d", count.index+1)}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
@@ -167,12 +167,12 @@ resource "azurerm_public_ip" "ip" {
 
 resource "azurerm_network_interface" "nic" {
   count               = var.worker_count
-  name                = "${azurerm_resource_group.rg.name}-${format("%02d", count.index+1)}-nic"
+  name                = "${azurerm_resource_group.rg.name}-nic-${format("%02d", count.index+1)}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
 
   ip_configuration {
-    name                          = "${azurerm_resource_group.rg.name}-${format("%02d", count.index+1)}-nic-config"
+    name                          = "${azurerm_resource_group.rg.name}-nic-config-${format("%02d", count.index+1)}"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = element(azurerm_public_ip.ip.*.id, format("%02d", count.index+1))
@@ -188,7 +188,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   size                  = var.vm_size
 
   os_disk {
-    name                 = "${azurerm_resource_group.rg.name}-vm-${format("%02d", count.index+1)}-osdisk"
+    name                 = "${azurerm_resource_group.rg.name}-vm-osdisk-${format("%02d", count.index+1)}"
     caching              = "ReadWrite"
     storage_account_type = var.vm_disk_type
   }
