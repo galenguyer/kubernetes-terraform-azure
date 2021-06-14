@@ -79,7 +79,7 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "6443"
-    source_address_prefix      = var.control_plane_access_range
+    source_address_prefixes    = var.control_plane_access_range
     destination_address_prefix = "*"
   }
   security_rule {
