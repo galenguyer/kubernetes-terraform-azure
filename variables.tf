@@ -13,6 +13,11 @@ variable "rg_region" {
   default = "eastus"
 }
 
+variable "control_plane_access_range" {
+  type    = string
+  default = "10.0.8.0/24"
+}
+
 variable "vm_size" {
   type    = string
   default = "Standard_B2s"
