@@ -90,7 +90,7 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "2379-2380"
-    source_address_prefix      = "10.0.8.0/24"
+    source_address_prefix      = "10.0.0.0/24"
     destination_address_prefix = "*"
   }
   security_rule {
@@ -101,7 +101,7 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "10250"
-    source_address_prefix      = "10.0.8.0/24"
+    source_address_prefix      = "10.0.0.0/24"
     destination_address_prefix = "*"
   }
   security_rule {
@@ -112,7 +112,7 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "10251"
-    source_address_prefix      = "10.0.8.0/24"
+    source_address_prefix      = "10.0.0.0/24"
     destination_address_prefix = "*"
   }
   security_rule {
@@ -123,7 +123,7 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "10252"
-    source_address_prefix      = "10.0.8.0/24"
+    source_address_prefix      = "10.0.0.0/24"
     destination_address_prefix = "*"
   }
   # worker node stuff
@@ -135,7 +135,7 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "10250"
-    source_address_prefix      = "10.0.8.0/24"
+    source_address_prefix      = "10.0.0.0/24"
     destination_address_prefix = "*"
   }
   security_rule {
@@ -146,7 +146,7 @@ resource "azurerm_network_security_group" "nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "30000-32767"
-    source_address_prefix      = "10.0.8.0/24"
+    source_address_prefix      = "10.0.0.0/24"
     destination_address_prefix = "*"
   }
 }

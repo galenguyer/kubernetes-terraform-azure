@@ -15,7 +15,7 @@ variable "rg_region" {
 
 variable "control_plane_access_range" {
   type    = list(any)
-  default = ["10.0.8.0/24"]
+  default = ["10.0.0.0/24"]
 }
 
 variable "vm_size" {
