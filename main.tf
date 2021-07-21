@@ -156,6 +156,29 @@ resource "azurerm_subnet_network_security_group_association" "nic-subnet-associa
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
+
+resource "azurerm_traffic_manager_profile" "traffic-manager" {
+  name                = "${azurerm_resource_group.rg.name}-lb"
+  resource_group_name = azurerm_resource_group.rg.name
+
+  traffic_routing_method = "Weighted"
+
+  dns_config {
+    relative_name = "${azurerm_resource_group.rg.name}-${var.unique_id}-lb"
+    ttl           = 60
+  }
+
+  monitor_config {
+    protocol                     = "http"
+    port                         = 80
+    path                         = "/"
+    expected_status_code_ranges  = ["100-299", "404-404"]
+    interval_in_seconds          = 30
+    timeout_in_seconds           = 9
+    tolerated_number_of_failures = 3
+  }
+}
+
 resource "azurerm_public_ip" "ip" {
   count               = var.worker_count
   name                = "${azurerm_resource_group.rg.name}-ip-${format("%02d", count.index + 1)}"
@@ -207,4 +230,14 @@ resource "azurerm_linux_virtual_machine" "vm" {
     username   = var.username
     public_key = file("~/.ssh/id_rsa.pub")
   }
+}
+
+resource "azurerm_traffic_manager_endpoint" "node-endpoint" {
+  count               = var.worker_count
+  name                = "${azurerm_resource_group.rg.name}-${var.unique_id}-${format("%02d", count.index + 1)}"
+  resource_group_name = azurerm_resource_group.rg.name
+  profile_name        = azurerm_traffic_manager_profile.traffic-manager.name
+  type                = "azureEndpoints"
+  target_resource_id  = element(azurerm_public_ip.ip.*.id, count.index)
+  weight              = 100
 }
